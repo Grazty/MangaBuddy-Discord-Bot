@@ -6,3 +6,6 @@ To-Do-List <br />
 3.Read ❌ <br />
 4.Favorite chapters(established a database) ❌ <br />
 5.Send dms on favorited chapters ❌ <br />
+<br />
+Latest Command Screenshot: <br />
+![alt text](https://i.imgur.com/qzqYGPp.png) <br />
