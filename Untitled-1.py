@@ -18,20 +18,20 @@ async def latest(ctx):
     browser = webdriver.Chrome()
     browser.delete_all_cookies()
     browser.get(url)
-    fullmessage = ''
     bait = browser.find_elements(By.TAG_NAME, 'h3')
     chapters = browser.find_elements(By.CLASS_NAME, 'latest-chapter')
+    embedvar = discord.Embed(title="**__TOP 10 LATEST UPDATES__**", color=0x0000FF)
     count = 10
     start = 0
-    fullmessage += ("**__TOP 10 LATEST UPDATES__**"+ '\n')
     for tit in bait:
-        if(count > start):
-            fullmessage += ('**TITLE: **' + tit.text + " **Chapter:**" + chapters[start].text.replace('CHAPTER', '') + '\n')
+        if(count > start):           
+            linkExtension = "https://mangabuddy.com/" + tit.text.replace(' ', '-')
+            embedvar.add_field(name='**TITLE: **' + tit.text , value= "**Chapter:**" + chapters[start].text.replace('CHAPTER', '') + " [READ HERE]" + "(" + linkExtension + ")", inline=False)
             start += 1
         else:
             break
     browser.close()
-    await ctx.send(fullmessage)
+    await ctx.send(embed = embedvar)
     
 
 bot.run(os.environ.get("api-token"))
