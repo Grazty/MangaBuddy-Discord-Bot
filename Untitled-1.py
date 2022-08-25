@@ -1,3 +1,7 @@
+from email import message
+import atexit
+from logging import exception
+from datetime import datetime
 import discord
 from discord.ext import commands
 from selenium import webdriver
@@ -9,11 +13,26 @@ load_dotenv()
 intents = discord.Intents.default()
 intents.message_content = True
 bot = commands.Bot(command_prefix='>', intents=intents)
+now = datetime.now()
+date_time = now.strftime("%m-%d-%Y_%H.%M.%S")
+logfile = open("logs/" + date_time + ".txt", "w+")
 
+@atexit.register 
+def goodbye(): 
+    logfile.close()
+    print("Exiting Python Script!")
 
+@bot.event
+async def on_command_error(ctx, error):
+    if isinstance(error, commands.MissingRequiredArgument):
+        await ctx.send("The fuck am I searching idiot, you didn’t give me shit to search for. Do you need another brain cell or something?")
 
 @bot.command()
 async def latest(ctx):
+    author = ctx.message.author
+    print(author.name + " Has sent the latest command which was >latest")
+    logfile.write(author.name + " Has sent the latest command which was >latest\n")
+    logfile.flush()
     url = 'https://mangabuddy.com/latest'
     browser = webdriver.Chrome()
     browser.delete_all_cookies()
@@ -32,6 +51,14 @@ async def latest(ctx):
             break
     browser.close()
     await ctx.send(embed = embedvar)
+    
+@bot.command()
+async def search(ctx, *, messages: str): 
+    author = ctx.message.author
+    print(author.name + " has sent the search command which was >search " + messages)
+    logfile.write(author.name + " has sent the search command which was >search " + messages + "\n")
+    logfile.flush()
+    await ctx.send(messages)
     
 
 bot.run(os.environ.get("api-token"))
