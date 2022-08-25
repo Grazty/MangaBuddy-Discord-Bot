@@ -8,4 +8,4 @@ To-Do-List <br />
 5.Send dms on favorited chapters ❌ <br />
 <br />
 Latest Command Screenshot: <br />
-![alt text](https://i.imgur.com/qzqYGPp.png) <br />
+![alt text](https://i.imgur.com/uzoV2Bo.png) <br />
